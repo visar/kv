@@ -24,6 +24,9 @@ defmodule KV.BucketTest do
     Bucket.put(bucket, "milk", 3)
     amount = Bucket.delete(bucket, "milk")
     assert amount == 3
+
+    amount = Bucket.get(bucket, "milk")
+    refute amount
   end
 
   test "ensure buckets are temporary workers" do
