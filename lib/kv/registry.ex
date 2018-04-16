@@ -1,8 +1,6 @@
 defmodule KV.Registry do
   use GenServer
 
-  alias KV.{Bucket, BucketSupervisor}
-
   ## Client API
 
   @doc """
@@ -51,7 +49,7 @@ defmodule KV.Registry do
     if Map.has_key?(names, name) do
       {:noreply, {names, refs}}
     else
-      {:ok, pid} = DynamicSupervisor.start_child(BucketSupervisor, Bucket)
+      {:ok, pid} = DynamicSupervisor.start_child(KV.BucketSupervisor, KV.Bucket)
       ref = Process.monitor(pid)
       refs = Map.put(refs, ref, name)
       names = Map.put(names, name, pid)
